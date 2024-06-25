@@ -9,12 +9,20 @@ process processS3FileAndPrintSize {
     path s3_file
 
     output:
-    stdout
+    path 'file_info.txt'
 
     script:
     """
-    file_size=\$(ls -lh "$s3_file" | awk '{print \$5}')
-    echo "File $s3_file has size: \$file_size"
+    echo "File: ${s3_file}" > file_info.txt
+    if [ -L "${s3_file}" ]; then
+        echo "Type: Symlink" >> file_info.txt
+        ls -lh "${s3_file}" >> file_info.txt
+        echo "Target: \$(readlink ${s3_file})" >> file_info.txt
+        ls -lh "\$(readlink ${s3_file})" >> file_info.txt
+    else
+        echo "Type: Regular file" >> file_info.txt
+        ls -lh "${s3_file}" >> file_info.txt
+    fi
     """
 }
 
@@ -25,5 +33,7 @@ workflow {
         .set { s3_file_channel }
 
     processS3FileAndPrintSize(s3_file_channel)
-        .view()
+        .flatten()
+        .map { it.text }
+        .view { it }
 }

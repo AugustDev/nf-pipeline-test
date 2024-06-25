@@ -53,11 +53,10 @@ EOF
 # Assembles the Nextflow command with all necessary options and parameters.
 nextflow_command='nextflow run https://github.com/AugustDev/nf-pipeline-test \
 --s3_paths='s3://cfdx-public-bucket/github-test-data/fastq/mini.fastq,s3://cfdx-public-bucket/github-test-data/fastq/mini.fastq' \
--r ea4d96bbb6314a87bfd323e6a0fb6ac9589d9f22 \
+-r 3d970726eb89d2e96233e8b1a6e6ba5c05975f9f \
 -c mmc.config \
 --input samplesheet.csv \
---outdir 's3://temp-nextflow-runs/am-test-2023-12-7/' \
--resume '
+--outdir 's3://temp-nextflow-runs/am-test-2023-12-7/''
 
 # -------------------------------------
 # ---- DO NOT EDIT BELOW THIS LINE ----
