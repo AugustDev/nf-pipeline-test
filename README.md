@@ -2,7 +2,7 @@
 
 ## Goal
 
-Test if there's a bottleneck staging many large files.
+Figure out if there's a bottleneck staging many large files.
 
 ## Instructions
 
@@ -25,3 +25,5 @@ Test if there's a bottleneck staging many large files.
 --env BUCKET=https://cfdx-juicefs.s3.us-east-1.amazonaws.com \
 -j job_submit_AWS.sh
 ```
+
+## Results

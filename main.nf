@@ -13,8 +13,8 @@ process processS3FileAndPrintSize {
 
     script:
     """
-    file_size=\$(ls -lh $s3_file | awk '{print \$5}')
-    echo "File $s3_file has size: \$file_size"
+    file_size=\$(aws s3 ls ${s3_path} --summarize | grep "Total Size" | awk '{print \$3, \$4}')
+    echo "File ${s3_path} has size: \$file_size"
     """
 }
 
