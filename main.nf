@@ -33,7 +33,4 @@ workflow {
         .set { s3_file_channel }
 
     processS3FileAndPrintSize(s3_file_channel)
-        .flatten()
-        .map { it.text }
-        .view { it }
 }
