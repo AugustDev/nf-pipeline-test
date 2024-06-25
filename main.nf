@@ -17,6 +17,7 @@ process processS3FileAndPrintSize {
     if [ -e "${s3_file}" ]; then
         echo "File exists: ${s3_file}" >> file_info.txt
         ls -lhL "${s3_file}" >> file_info.txt
+        cat file_info.txt
     else
         echo "File not found: ${s3_file}" >> file_info.txt
     fi
