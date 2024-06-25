@@ -13,15 +13,12 @@ process processS3FileAndPrintSize {
 
     script:
     """
-    echo "File: ${s3_file}" > file_info.txt
-    if [ -L "${s3_file}" ]; then
-        echo "Type: Symlink" >> file_info.txt
-        ls -lh "${s3_file}" >> file_info.txt
-        echo "Target: \$(readlink ${s3_file})" >> file_info.txt
-        ls -lh "\$(readlink ${s3_file})" >> file_info.txt
+    echo "Processing file: ${s3_file}" > file_info.txt
+    if [ -e "${s3_file}" ]; then
+        echo "File exists: ${s3_file}" >> file_info.txt
+        ls -lhL "${s3_file}" >> file_info.txt
     else
-        echo "Type: Regular file" >> file_info.txt
-        ls -lh "${s3_file}" >> file_info.txt
+        echo "File not found: ${s3_file}" >> file_info.txt
     fi
     """
 }
@@ -33,4 +30,8 @@ workflow {
         .set { s3_file_channel }
 
     processS3FileAndPrintSize(s3_file_channel)
+        .flatten()
+        .view { file_info ->
+            println file_info.text
+        }
 }
