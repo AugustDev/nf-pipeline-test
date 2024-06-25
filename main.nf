@@ -1,9 +1,3 @@
-process {
-    container = "public.ecr.aws/t1x4r7h8/nextflow-public:1.4.1"
-    cpus   = { check_max( 1    * task.attempt, 'cpus'   ) }
-    memory = { check_max( 6.GB * task.attempt, 'memory' ) }
-}
-    
 params.s3_paths = []
 
 if (params.s3_paths.size() == 0) {
